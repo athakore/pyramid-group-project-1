@@ -1,0 +1,4 @@
+user username login --> store to file
+user password login --> encrypt --> store to file
+see/list admin privileges of account --> admin acct manages user accounts
+account permissions determine which files can be accessed
