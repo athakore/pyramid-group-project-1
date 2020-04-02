@@ -1,3 +1,5 @@
+package sample;
+
 import java.io.*;
 import java.util.*;
 

@@ -1,7 +1,7 @@
-->User Login/User Signup => Sterling
+->sample.User Login/sample.User Signup => Sterling
 ->Login Page GUI => Aleck
 ->Login Page has an option to choose whether you login in as a standard user or administrator => Aleck
-->User Registration GUI => Aleck
+->sample.User Registration GUI => Aleck
 ->Portal GUI => Gaurav
 ->Standard users get access to mock dashboard with dummy information and dummy charts => Aarth
 ->Adminstrator-level Users get access to admin dashboard where they can change usernames and passwords and remove users => Aarth

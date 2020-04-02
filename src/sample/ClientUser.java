@@ -1,13 +1,14 @@
+package sample;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
 
-public class AdminUser extends User {
-    public boolean isAdmin;
+public class ClientUser extends User {
 
-    public AdminUser(String userNm, String userPsswd) throws IOException {
+    public ClientUser(String userNm, String userPsswd) throws IOException {
         super(userNm, userPsswd);
         this.userID = new Random().nextInt();
         fileReader = new FileReader(file);
@@ -15,7 +16,6 @@ public class AdminUser extends User {
         userInfoMap = new HashMap<>();
         passwordMap = new HashMap<Integer, String>();
     }
-
     @Override
     public void Login(String loginName, String loginPasswd){
 
@@ -23,18 +23,6 @@ public class AdminUser extends User {
 
     @Override
     public void Register(String regName, String regPasswd){
-
-    }
-
-    public static void DeleteUser(){
-
-    }
-
-    public static void EditPermissions(){
-
-    }
-
-    public static void CreateGroup(){
 
     }
 }
