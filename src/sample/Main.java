@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,13 +23,18 @@ import javafx.scene.text.Text;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import java.awt.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Main extends Application {
 
     Stage window;
-
+    private static DateTimeFormatter SHORT_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
     public static void main(String[] args) {
         launch(args);
     }
@@ -44,9 +51,11 @@ public class Main extends Application {
         GridPane grid = new GridPane();
         Scene scene1 = new Scene(grid, 570, 420);   //width, height for login
 
+        GridPane profile = new GridPane();
+        Scene sceneProfile = new Scene(profile, 570, 420);   //width, height for profile
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //REGISTER GRID
-
 
         register.setAlignment(Pos.CENTER);
         register.setHgap(10);           //gap manages spacing between row/col
@@ -92,17 +101,13 @@ public class Main extends Application {
         hb2.getChildren().addAll(gotologin, registering);
         register.add(hb2, 1, 4);
 
-
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //LOGIN GRID
-
 
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);           //gap manages spacing between row/col
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));    //25px padding
-
 
         //text, label, fields
         Text scenetile = new Text("Login");
@@ -126,7 +131,7 @@ public class Main extends Application {
         b2.setOnAction(e -> window.setScene(regscene));
         //login button
         Button b1 = new Button("login");
-
+        b1.setOnAction(e -> window.setScene(sceneProfile));
 
         HBox hb = new HBox(10);             //the placement for the buttons
         hb.setAlignment(Pos.BOTTOM_RIGHT);
@@ -140,11 +145,35 @@ public class Main extends Application {
         regscene.getStylesheets().add("styles2.css");
         window.show();
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //USER PROFILE GRID
+
+        profile.setAlignment(Pos.TOP_LEFT);
+        profile.setHgap(10);           //gap manages spacing between row/col
+        profile.setVgap(10);
+        profile.setPadding(new Insets(25, 25, 25, 25));    //25px padding
+
+        String welcome = "Welcome to Pyramid Academy, [username]\n"+
+                "Today is " + new SimpleDateFormat("EEEEE dd MMMMM yyyy").format(new Date()) + "\n";
+
+        String profileString = welcome + "Username: [username]\n" +
+                "Gender: Male\n" +
+                "Birthday: 9/26/1961\n" +
+                "Country: USA\n" +
+                "Friends: 5 friends\n" +
+                "Online Now: no\n" +
+                "Member Center Viewed: 0\n" +
+                "Language: Not Set\n" +
+                "Referer ID: 123\n";
+
+        Label profileLabel = new Label(profileString);
+        profile.add(profileLabel, 0, 0, 2,1); //row 0
+
+        //go back to login page
+        Button profileLogOut = new Button("LOG OUT ");
+        profileLogOut.setOnAction(e -> window.setScene(scene1));
+        profile.add(profileLogOut, 1, 2);   //row 2
+
+        sceneProfile.getStylesheets().add("styles3.css");
     }
-
-
-
-
-
-
 }
