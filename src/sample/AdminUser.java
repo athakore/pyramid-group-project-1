@@ -3,28 +3,18 @@ package sample;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Random;
 
 public class AdminUser extends User {
     public boolean isAdmin;
 
-    public AdminUser(String userNm, String userPsswd) throws IOException {
-        super(userNm, userPsswd);
+    public AdminUser(int userID, String userNm, String userPsswd) throws IOException {
+        super(userID, userNm, userPsswd);
         this.userID = new Random().nextInt();
         fileReader = new FileReader(file);
         fileWriter = new FileWriter(file);
-        userInfoMap = new HashMap<>();
-        passwordMap = new HashMap<Integer, String>();
-    }
-
-    @Override
-    public void Login(String loginName, String loginPasswd){
-
-    }
-
-    @Override
-    public void Register(String regName, String regPasswd){
 
     }
 
@@ -32,10 +22,13 @@ public class AdminUser extends User {
 
     }
 
+    //method that allows admin users to edit permissions of new and/or existing users found in our target file
     public static void EditPermissions(){
 
     }
 
+    //method that allows admin user to create and add users to a given group --> may be forced to forgo this method due
+    //to deadline restrictions
     public static void CreateGroup(){
 
     }

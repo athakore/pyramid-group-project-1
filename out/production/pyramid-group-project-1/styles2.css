@@ -1,0 +1,32 @@
+/* STYLESHEET FOR THE REGISTRY */
+
+.root{
+    -fx-background-image: url("/crop.jpg");
+    -fx-font-size: 10pt;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center; /* <- keeps the image in place */
+
+}
+
+.label{
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 13pt;
+}
+
+.button{
+    -fx-background-radius: 10;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #88eb98;
+    -fx-opacity: 0.8;
+    -fx-transition: 0.3s;
+}
+
+.button: hover{-fx-opacity: 1}
+
+#registertext{
+    -fx-fill: #e65580;
+    -fx-font-size: 25pt;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
