@@ -89,7 +89,7 @@ public class Main extends Application {
         Label wantedusername = new Label("username: ");
         register.add(wantedusername, 0, 1);   //space between scenetile text and username
         TextField regtext = new TextField();
-        regtext.setPromptText("Enter a name");
+        regtext.setPromptText("Enter a username");
         register.add(regtext, 1, 1);   //row 1
 
         Label wantedpass = new Label("password: ");
@@ -99,7 +99,7 @@ public class Main extends Application {
         register.add(regpass, 1, 2);   //row 2
 
         //'go back to login' button
-        Button gotologin = new Button("Back to login");
+        Button gotologin = new Button("Back to Login");
         gotologin.setOnAction(e -> window.setScene(scene1));
         //button to submit the user/pass
         Button registering = new Button("Create Account");
@@ -152,7 +152,7 @@ public class Main extends Application {
         Button b2 = new Button("Don't have an Account?");
         b2.setOnAction(e -> window.setScene(regscene));
         //login button
-        Button b1 = new Button("login");
+        Button b1 = new Button("Login");
         b1.setOnAction(e -> {
             try {
                 activeUser = Login(usertext.getText(), pass.getText());
@@ -204,7 +204,7 @@ public class Main extends Application {
         profile.add(profileLabel, 0, 0, 2,1); //row 0
 
         //go back to login page
-        Button profileLogOut = new Button("LOG OUT ");
+        Button profileLogOut = new Button("Log out");
         profileLogOut.setOnAction(e -> window.setScene(scene1));
         profile.add(profileLogOut, 1, 2);   //row 2
 
