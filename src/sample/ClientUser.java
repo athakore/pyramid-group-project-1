@@ -13,13 +13,4 @@ public class ClientUser extends User {
         fileReader = new FileReader(file);
         fileWriter = new FileWriter(file);
     }
-    @Override
-    public void Login(String loginName, String loginPasswd){
-
-    }
-
-    @Override
-    public void Register(String regName, String regPasswd){
-
-    }
 }

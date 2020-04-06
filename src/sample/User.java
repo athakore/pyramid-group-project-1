@@ -2,6 +2,9 @@ package sample;
 
 /*pertinent imports used throughout the user class below*/
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 //creation of the User class
@@ -174,5 +177,4 @@ public class User {
         }
 
     }
-//
 }
