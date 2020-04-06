@@ -23,6 +23,11 @@ import javafx.scene.text.Text;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -39,11 +44,14 @@ public class Main extends Application {
         launch(args);
     }
 
+    public static final String userFile = System.getProperty("user.dir") + "\\src\\UserInfo.csv";
+    public static User activeUser = new ClientUser();
+
     @Override
     public void start(Stage primaryStage) throws Exception{
 
         window = primaryStage;
-        window.setTitle("project title thing");
+        window.setTitle("Company Portal");
 
         GridPane register = new GridPane();
         Scene regscene = new Scene(register, 570 , 420);
@@ -95,6 +103,20 @@ public class Main extends Application {
         gotologin.setOnAction(e -> window.setScene(scene1));
         //button to submit the user/pass
         Button registering = new Button("Create Account");
+        registering.setOnAction(e -> {
+            boolean temp = false;
+            try {
+                temp = Register(regtext.getText(), regpass.getText(), accesslevel.getValue().equals("Admin"));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            if(temp) window.setScene(scene1);
+            else {
+                regtext.setPromptText(String.format("The User '%s' already exists!", regtext.getText()));
+                regtext.clear();
+                regpass.clear();
+            }
+        });
 
         HBox hb2 = new HBox(10);             //the placement for the buttons
         hb2.setAlignment(Pos.BOTTOM_RIGHT);
@@ -131,7 +153,19 @@ public class Main extends Application {
         b2.setOnAction(e -> window.setScene(regscene));
         //login button
         Button b1 = new Button("login");
-        b1.setOnAction(e -> window.setScene(sceneProfile));
+        b1.setOnAction(e -> {
+            try {
+                activeUser = Login(usertext.getText(), pass.getText());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            if(activeUser.getUsername() == "") {
+                usertext.clear();
+                pass.clear();
+                usertext.setPromptText("Username or password is incorrect!");
+            }
+            else window.setScene(sceneProfile);
+        });
 
         HBox hb = new HBox(10);             //the placement for the buttons
         hb.setAlignment(Pos.BOTTOM_RIGHT);
@@ -153,10 +187,10 @@ public class Main extends Application {
         profile.setVgap(10);
         profile.setPadding(new Insets(25, 25, 25, 25));    //25px padding
 
-        String welcome = "Welcome to Pyramid Academy, [username]\n"+
+        String welcome = "Welcome to Pyramid Academy, " + activeUser.getUsername() + "\n" +
                 "Today is " + new SimpleDateFormat("EEEEE dd MMMMM yyyy").format(new Date()) + "\n";
 
-        String profileString = welcome + "Username: [username]\n" +
+        String profileString = welcome + "Username:" + activeUser.getUsername() + "\n" +
                 "Gender: Male\n" +
                 "Birthday: 9/26/1961\n" +
                 "Country: USA\n" +
@@ -175,5 +209,42 @@ public class Main extends Application {
         profile.add(profileLogOut, 1, 2);   //row 2
 
         sceneProfile.getStylesheets().add("styles3.css");
+    }
+
+    public static boolean Register(String username, String password, boolean isAdmin) throws IOException {
+        if(!FindUser(username)) {
+            User user = isAdmin ? new AdminUser(username, password) : new ClientUser(username, password);
+            Files.write(Paths.get(userFile), String.format("%s%s:%s", System.lineSeparator(), user.toString(), isAdmin).getBytes(), StandardOpenOption.APPEND);
+            return true;
+        }
+        else {
+            System.out.println("The User '" + username + "' already exists!");
+            return false;
+        }
+    }
+
+    public static User Login(String username, String password) throws IOException {
+        String result = Files.lines(Paths.get(userFile)).filter(user -> {
+            String[] temp = user.split(":");
+            return temp[1].equals(username) && decrypt(temp[2]).equals(password);
+        }).findAny().orElse("");
+        return result.equals("") ?
+                new ClientUser() :
+                result.split(":")[3].equals("true") ?
+                        new AdminUser(result.split(":")[0], result.split(":")[1], result.split(":")[2]) :
+                        new ClientUser(result.split(":")[0], result.split(":")[1], result.split(":")[2]);
+    }
+
+    public static boolean FindUser(String username)  throws IOException {
+        return Files.lines(Paths.get(userFile)).anyMatch(user -> user.split(":")[1].equals(username));
+    }
+
+    public static String decrypt(String password) {
+        String result = "";
+        for(int i = 0; i < password.length(); i++) {
+            if(Character.isUpperCase(password.charAt(i))) result += (char)(((int)password.charAt(i) - 42) % 26 + 65);
+            else result +=  (char)(((int)password.charAt(i) - 74) % 26 + 97);
+        }
+        return result;
     }
 }
