@@ -1,7 +1,7 @@
 /* STYLESHEET FOR THE USER PROFILE */
 
 .root{
-    -fx-background-image: url("/crop.jpg");
+    -fx-background-image: url("black-forest-germany-940x528.jpg");
     -fx-font-size: 10pt;
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;

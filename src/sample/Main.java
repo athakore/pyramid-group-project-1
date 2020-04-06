@@ -164,7 +164,11 @@ public class Main extends Application {
                 pass.clear();
                 usertext.setPromptText("Username or password is incorrect!");
             }
-            else window.setScene(sceneProfile);
+            else {
+                usertext.clear();
+                pass.clear();
+                window.setScene(sceneProfile);
+            }
         });
 
         HBox hb = new HBox(10);             //the placement for the buttons
